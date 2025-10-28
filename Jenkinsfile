@@ -16,9 +16,9 @@ pipeline {
     
     stage('Install Dependencies') {
       steps {
-        sh '''
-          python3 -m venv venv
-          . venv/bin/activate
+        bat '''
+          python -m venv venv
+          call venv\\Scripts\\activate.bat
           pip install -r requirements.txt
         '''
       }
@@ -26,8 +26,8 @@ pipeline {
     
     stage('Unit Test') {
       steps {
-        sh '''
-          . venv/bin/activate
+        bat '''
+          call venv\\Scripts\\activate.bat
           pytest test_app.py -v --tb=short
         '''
       }
