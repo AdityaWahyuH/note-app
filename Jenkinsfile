@@ -5,7 +5,7 @@ pipeline {
     IMAGE_NAME = 'adityawahyuh/notes-app'
     REGISTRY = 'https://index.docker.io/v1/'
     REGISTRY_CREDENTIALS = 'notes-app'
-    PATH = "C:\\Python312;C:\\Python312\\Scripts;${env.PATH}"
+    PATH = "C:\Users\DELL\AppData\Local\Microsoft\WindowsApps\python.exe"
   }
   
   stages {
