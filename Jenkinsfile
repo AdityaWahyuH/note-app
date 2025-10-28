@@ -5,6 +5,7 @@ pipeline {
     IMAGE_NAME = 'adityawahyuh/notes-app'
     REGISTRY = 'https://index.docker.io/v1/'
     REGISTRY_CREDENTIALS = 'notes-app'
+    PATH = "C:\\Python312;C:\\Python312\\Scripts;${env.PATH}"
   }
   
   stages {
@@ -17,6 +18,7 @@ pipeline {
     stage('Install Dependencies') {
       steps {
         bat '''
+          python --version
           python -m venv venv
           call venv\\Scripts\\activate.bat
           pip install -r requirements.txt
