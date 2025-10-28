@@ -5,7 +5,6 @@ pipeline {
     IMAGE_NAME = 'adityawahyuh/notes-app'
     REGISTRY = 'https://index.docker.io/v1/'
     REGISTRY_CREDENTIALS = 'notes-app'
-    PATH = "C:\\Users\\DELL\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;${env.PATH}"
   }
   
   stages {
@@ -15,27 +14,16 @@ pipeline {
       }
     }
     
-    stage('Install Dependencies') {
+    stage('Run Unit Tests in Docker') {
       steps {
         bat '''
-          python --version
-          python -m venv venv
-          call venv\\Scripts\\activate.bat
-          pip install -r requirements.txt
+          docker build -t test-image -f Dockerfile.test .
+          docker run --rm test-image
         '''
       }
     }
     
-    stage('Unit Test') {
-      steps {
-        bat '''
-          call venv\\Scripts\\activate.bat
-          pytest test_app.py -v --tb=short
-        '''
-      }
-    }
-    
-    stage('Build Docker Image') {
+    stage('Build Production Image') {
       steps {
         script {
           docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}")
@@ -59,6 +47,7 @@ pipeline {
   post {
     always {
       echo 'Pipeline selesai dijalankan'
+      bat 'docker image prune -f'
     }
     success {
       echo 'Build dan push berhasil!'

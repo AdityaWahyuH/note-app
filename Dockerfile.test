@@ -1,0 +1,13 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy requirements dan install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy semua file aplikasi
+COPY . .
+
+# Jalankan test
+CMD ["pytest", "test_app.py", "-v", "--tb=short"]
