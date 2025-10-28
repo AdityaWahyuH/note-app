@@ -4,7 +4,7 @@ pipeline {
   environment {
     IMAGE_NAME = 'adityawahyuh/notes-app'
     REGISTRY = 'https://index.docker.io/v1/'
-    REGISTRY_CREDENTIALS = 'notes-app'
+    REGISTRY_CREDENTIALS = 'note-app'
   }
   
   stages {
